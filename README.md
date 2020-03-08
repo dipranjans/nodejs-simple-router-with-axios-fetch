@@ -1,1 +1,3 @@
-#nodejs-simple-router-with-axios-fetch
+This project is based on node.js with express framework. 
+In this project we can learn how to use express framework with small example of routes in a different folder path.
+hope is a simple boilerplate for node.js express routing...
