@@ -1,12 +1,12 @@
 const routes = require("express").Router();
 const axios = require("axios");
 
-// root url for the route
+// Root url for the route
 routes.get("/", (req, res) => {
   res.send("Route index set up successfull!");
 });
 
-// navigate to user and fetch the github users details
+// Navigate to user and fetch the github users details
 routes.get("/user", (req, res, next) => {
   let urls = [
     "https://api.github.com/users/diptiranjans",
