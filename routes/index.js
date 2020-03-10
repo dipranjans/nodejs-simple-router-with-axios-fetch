@@ -1,5 +1,7 @@
 const routes = require("express").Router();
 const axios = require("axios");
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
 
 // Root url for the route
 routes.get("/", (req, res) => {
@@ -9,7 +11,7 @@ routes.get("/", (req, res) => {
 // Navigate to user and fetch the github users details
 routes.get("/user", (req, res, next) => {
   let urls = [
-    "https://api.github.com/users/diptiranjans",
+    "https://api.github.com/users/pvdz",
     "https://api.github.com/users/remy",
     "https://api.github.com/users/jeresig"
   ];
@@ -32,7 +34,7 @@ routes.get("/user", (req, res, next) => {
 routes.get("/git", (req, res) => {
   // res.send("dipranjan");
   axios
-    .get(`https://api.github.com/users/diptiranjans`, (err, resp, body) => {
+    .get(`https://api.github.com/users/pvdz`, (err, resp, body) => {
       if (err) {
         reject(err);
       } else {
@@ -43,8 +45,7 @@ routes.get("/git", (req, res) => {
       function(result) {
         userDetails = result;
         console.log("Initialized user details");
-        // Use user details from here
-        console.log(userDetails);
+
         res.send("Data fetch successfully!");
       },
       function(err) {
@@ -52,5 +53,31 @@ routes.get("/git", (req, res) => {
       }
     );
 });
+
+routes.get("/github", (req, res, next) => {
+  loadGithubUser("diptiranjans")
+    .then(showAvatar)
+    .then(githubUser => {
+      setTimeout(() => {
+        res.send(`<img src=${githubUser.data.avatar_url} />`);
+      }, 3000);
+    });
+});
+
+function loadGithubUser(name) {
+  return axios
+    .get(`https://api.github.com/users/${name}`)
+    .then(response => response);
+}
+
+function showAvatar(githubUser) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(() => {
+      //img.remove();
+      console.log("hello");
+      resolve(githubUser);
+    }, 1000);
+  });
+}
 
 module.exports = routes;
